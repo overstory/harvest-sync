@@ -59,10 +59,11 @@ class CsvFilter
 		long badRows = 0
 		long goodRows = 0
 
-		listWriter.write (header)
-		List<String> row
+		header = rowMapper.prepare (header)
 
-		rowMapper.prepare (header)
+		listWriter.write (header)
+
+		List<String> row
 
 		try {
 			while ((row = listReader.read()) != null)
@@ -74,11 +75,9 @@ class CsvFilter
 					badRows++
 				}
 
-				rowMapper.mapRow (row)
+				listWriter.write (rowMapper.mapRow (row))
 
 				goodRows++
-
-				listWriter.write (row)
 			}
 		} finally {
 			if (badRows != 0) {

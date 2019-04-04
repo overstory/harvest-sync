@@ -81,7 +81,6 @@ class FilterHarvestTime
 
 		new CsvFilter (listReader, listWriter, clientMapper).run()
 	}
-
 }
 
 // ------------------------------------------------------------------------------------
@@ -98,7 +97,7 @@ class ClientMapper implements RowMapper
 	}
 
 	@Override
-	void prepare (String [] headers)
+	String [] prepare (String [] headers)
 	{
 		headers.eachWithIndex { String entry, int i ->
 			if ('Project' == headers [i]) projectColumn = i
@@ -107,16 +106,22 @@ class ClientMapper implements RowMapper
 
 		if (clientColumn == -1) throw new IllegalStateException("Could not find 'Client' column")
 		if (projectColumn == -1) throw new IllegalStateException("Could not find 'Project' column")
+
+		headers
 	}
 
 	@Override
-	String[] mapRow (List<String> columns)
+	List<String> mapRow (List<String> columns)
 	{
 		String project = columns [projectColumn]
 		String newClient = projectMap [project]
 
 		if (newClient == null) throw new IllegalStateException ("Cannot map project '${project}' to new client")
 
-		columns [clientColumn] = newClient
+		List<String> newRow = columns.toList()
+
+		newRow [clientColumn] = newClient
+
+		newRow
 	}
 }

@@ -20,6 +20,6 @@ package harvest.csv
 
 interface RowMapper
 {
-	void prepare (String [] headers)
-	String [] mapRow (List<String> row)
+	String [] prepare (String [] headers)
+	List<String> mapRow (List<String> row)
 }
