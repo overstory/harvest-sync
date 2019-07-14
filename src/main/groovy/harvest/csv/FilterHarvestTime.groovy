@@ -24,19 +24,23 @@ import org.supercsv.io.ICsvListReader
 import org.supercsv.io.ICsvListWriter
 import org.supercsv.prefs.CsvPreference
 
+/*
+	This class read a CSV file exported from (someone else's) Harvest and maps the Client names to match the names in your Harvest.
+	The mappings are provided as a series of comma-separated name=value pairs in the third command line argument (see below).
+ */
 class FilterHarvestTime
 {
-	private static CsvPreference inputPrefs()
+	static CsvPreference inputPrefs()
 	{
 		return new CsvPreference.Builder ('"'.charAt (0), 44, '\r\n').build()
 	}
 
-	private static CsvPreference outputPrefs()
+	static CsvPreference outputPrefs()
 	{
 		return new CsvPreference.Builder ('"'.charAt (0), 44, '\r\n').build()
 	}
 
-	private static Map<String,String> clientMap (String mapList)
+	static Map<String,String> clientMap (String mapList)
 	{
 		Map<String,String> map = new HashMap<>()
 		String [] pairs = mapList.split (',')
@@ -70,8 +74,8 @@ class FilterHarvestTime
 	static void main (String[] args) throws Exception
 	{
 		if (args.length < 3) {
-			System.out.println ("usage: inputpath outputpath|- project-client-map");
-			return;
+			System.out.println ("usage: inputpath outputpath|- project-client-map")
+			return
 		}
 
 		ICsvListReader listReader = new CsvListReader (new FileReader (args [0]), inputPrefs())

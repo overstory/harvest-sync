@@ -24,6 +24,10 @@ import org.supercsv.io.ICsvListReader
 import org.supercsv.io.ICsvListWriter
 import org.supercsv.prefs.CsvPreference
 
+/*
+	This class reads a CSV exported from Harvest, which has a lot of unnecessary columns, and strips out all but the essential columns.
+	This yields a file that is ready to be imported into another Harvest account.
+ */
 class HarvestExport
 {
 	private static CsvPreference inputPrefs()
